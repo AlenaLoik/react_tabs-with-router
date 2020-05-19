@@ -1,24 +1,25 @@
 import React from 'react';
-import { useRouteMatch, Link } from "react-router-dom";
+import { useRouteMatch, NavLink, Switch, Route } from "react-router-dom";
 
 type Props = {
   title: string;
-  onTabSelected: (title: string) => void;
-  selectedTab: string;
+  content: string;
 }
 
-export const TabsHead: React.FC<Props> = ({ title, onTabSelected, selectedTab }) => {
+export const TabsHead: React.FC<Props> = ({ title, content }) => {
   let match = useRouteMatch();
 
   return (
-    <Link to={`${match.url}/${title}`}>
-      <button
-        type="button"
-        className={(selectedTab === title) ? 'button selected' : 'button'}
-        onClick={() => {
-          onTabSelected(title);
-        }}
-      >{title}</button>
-    </Link>
+    <>
+      <li className="nav-item">
+        <NavLink className="nav-link" to={`${match.url}/${title}`}>{title}
+        </NavLink>
+      </li>
+      <Switch>
+        <Route path={`${match.url}/${title}`}>
+          <section className="content">{content}</section>
+        </Route>
+      </Switch>
+    </>
   )
 };

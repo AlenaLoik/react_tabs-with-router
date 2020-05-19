@@ -1,19 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './App.css';
 import { TabsHead } from './TabsHead';
-import { TabsBody } from './TabsBody';
 import { dataTabs } from './data';
 import { NavLink, Switch, Route } from 'react-router-dom';
 
 const App = () => {
-  const [tabSelected, setSelected] = useState('');
-
-  const onTabSelected = (title: string) => {
-    setSelected(title);
-  };
-
-  const vievContent = dataTabs.find(tab => tab.title === tabSelected);
-
   return (
     <>
       <ul className="nav nav-tabs">
@@ -27,17 +18,15 @@ const App = () => {
       <Switch>
         <Route path="/tabs">
           <h2>Tabs</h2>
-          <div className="app">
+          <ul className="nav nav-tabs nav-2">
             {dataTabs.map(theadCell => (
               <TabsHead
-                onTabSelected={onTabSelected}
-                selectedTab={tabSelected}
+                content={theadCell.content}
                 key={theadCell.title}
                 title={theadCell.title}
               />
             ))}
-            <TabsBody text={vievContent?.content} />
-          </div>
+          </ul>
         </Route>
         <Route path="/">
           <h2>Home</h2>
