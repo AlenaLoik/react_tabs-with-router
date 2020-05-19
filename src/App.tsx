@@ -1,17 +1,51 @@
-import React from 'react';
-
+import React, { useState } from 'react';
 import './App.css';
+import { TabsHead } from './TabsHead';
+import { TabsBody } from './TabsBody';
+import { dataTabs } from './data';
+import { NavLink, Switch, Route } from 'react-router-dom';
 
-// const tabs = [
-//   { id: 'tab-1', title: 'Tab 1', content: 'Some text 1' },
-//   { id: 'tab-2', title: 'Tab 2', content: 'Some text 2' },
-//   { id: 'tab-3', title: 'Tab 3', content: 'Some text 3' },
-// ];
+const App = () => {
+  const [tabSelected, setSelected] = useState('');
 
-const App = () => (
-  <div className="App">
-    <h1>Tabs with router</h1>
-  </div>
-);
+  const onTabSelected = (title: string) => {
+    setSelected(title);
+  };
+
+  const vievContent = dataTabs.find(tab => tab.title === tabSelected);
+
+  return (
+    <>
+      <ul className="nav nav-tabs">
+        <li className="nav-item">
+          <NavLink className="nav-link" to="/" exact>Home</NavLink>
+        </li>
+        <li className="nav-item">
+          <NavLink className="nav-link" to="/tabs" exact>Tabs</NavLink>
+        </li>
+      </ul>
+      <Switch>
+        <Route path="/tabs">
+          <h2>Tabs</h2>
+          <div className="app">
+            {dataTabs.map(theadCell => (
+              <TabsHead
+                onTabSelected={onTabSelected}
+                selectedTab={tabSelected}
+                key={theadCell.title}
+                title={theadCell.title}
+              />
+            ))}
+            <TabsBody text={vievContent?.content} />
+          </div>
+        </Route>
+        <Route path="/">
+          <h2>Home</h2>
+        </Route>
+      </Switch>
+
+    </>
+  );
+}
 
 export default App;
