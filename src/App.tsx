@@ -1,17 +1,40 @@
 import React from 'react';
-
 import './App.css';
+import { TabsHead } from './TabsHead';
+import { dataTabs } from './data';
+import { NavLink, Switch, Route } from 'react-router-dom';
 
-// const tabs = [
-//   { id: 'tab-1', title: 'Tab 1', content: 'Some text 1' },
-//   { id: 'tab-2', title: 'Tab 2', content: 'Some text 2' },
-//   { id: 'tab-3', title: 'Tab 3', content: 'Some text 3' },
-// ];
+const App = () => {
+  return (
+    <>
+      <ul className="nav nav-tabs">
+        <li className="nav-item">
+          <NavLink className="nav-link" to="/" exact>Home</NavLink>
+        </li>
+        <li className="nav-item">
+          <NavLink className="nav-link" to="/tabs" exact>Tabs</NavLink>
+        </li>
+      </ul>
+      <Switch>
+        <Route path="/tabs">
+          <h2>Tabs</h2>
+          <ul className="nav nav-tabs nav-2">
+            {dataTabs.map(theadCell => (
+              <TabsHead
+                content={theadCell.content}
+                key={theadCell.title}
+                title={theadCell.title}
+              />
+            ))}
+          </ul>
+        </Route>
+        <Route path="/">
+          <h2>Home</h2>
+        </Route>
+      </Switch>
 
-const App = () => (
-  <div className="App">
-    <h1>Tabs with router</h1>
-  </div>
-);
+    </>
+  );
+}
 
 export default App;
