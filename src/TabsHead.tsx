@@ -12,7 +12,8 @@ export const TabsHead: React.FC<Props> = ({ title, content }) => {
   return (
     <>
       <li className="nav-item">
-        <NavLink className="nav-link" to={`${match.url}/${title}`}>{title}
+        <NavLink className="nav-link" to={`${match.url}/${title}`}>
+          {title}
         </NavLink>
       </li>
       <Switch>
